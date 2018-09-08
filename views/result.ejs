@@ -13,8 +13,8 @@
         <h1>All Quote</h1>
         <% for (var x in data) {%>
         <div>
-        <p> Name <%= data[x].name %></p>
-        <span> -  <%= data[x].Quote %>  at  <%= data[x].createdAt.toString("MM/dd/yyyy HH:mm") %></span>
+        <p> Quote <%= data[x].Quote %></p>
+        <span> By-  <%= data[x].name %>  at  <%= moment(data[x].createdAt).format("h:mm a MMMM DD YYYY") %></span>
         <hr>
         </div>
         <% } %>

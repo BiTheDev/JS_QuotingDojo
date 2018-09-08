@@ -12,6 +12,12 @@
 <body>
     <div id="container">
         <h1>Welcome to Quoting Dojo</h1>
+        <% JSON.stringify(messages) %>
+        <% if(messages.registration) { %>
+            <% for (var x of messages.registration) { %>
+             <h3 style="color:red;"><%= x %></h3>
+            <% } %>
+        <% } %>
         <form action="/makeQuote" method="POST" asp-controller="Home">
             <label for="name">Your Name:</label> 
             <input class="form-control" type="text" name="name" placeholder="Name">

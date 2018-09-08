@@ -1,3 +1,8 @@
+// const xp = require("express");
+// const flash = require('express-flash');
+// const app = xp();
+// app.use(flash());
+const moment = require("moment");
 module.exports = {
     home: home,
     Quotes: AllQuotes,
@@ -8,6 +13,8 @@ const Dojo = require("./model.js");
 
 function home(req,res){
     console.log("hit root route");
+    // var msg = req.flash("registration");
+    
     res.render("index");
 }
 
@@ -17,20 +24,26 @@ function AllQuotes(req,res){
         if(errs){
             console.log(errs);
         }
-        res.render("result", {data : data.reverse()});
+        res.render("result", {data : data.reverse(), moment :moment});
     })
 };
 
 function makeQuote(req,res){
     console.log("making Quotes");
-    console.log(req.body);
-    Dojo.create(req.body, (errs, results)=>{
+    var quote = req.body;
+    console.log(quote);
+    Dojo.create(quote, (errs, results)=>{
         if(errs){
             console.log("you sucks!");
             console.log(errs);
+            for(var key in errs.errors){
+                console.log(errs.errors[key].message);   
+                req.flash("registration", errs.errors[key].message);
+            }
+            res.redirect('/');
         }else{
             console.log(results);
+            res.redirect("/result");
         }
-        res.redirect("/result");
     })
 }
